@@ -133,6 +133,28 @@ def export_arff(binary, path, relation="monoun_transactions"):
     return path
 
 
+def export_arff_nominal(transactions, path, relation="monoun_transactions_nominal",
+                        thresholds=THRESHOLDS):
+    """Écrit les transactions en ARFF avec 6 attributs nominaux (3 valeurs chacun).
+
+    Format destiné à Apriori dans Weka : chaque valeur nominale est un item
+    (ex. Rain=Rain_Extreme_Downpour). Avec le format binaire {0,1}, Apriori
+    traiterait aussi les 0 (absences) comme des items.
+    """
+    values = {"Season": SEASON_ITEMS}
+    values.update({name: labels for name, (_, _, _, labels) in thresholds.items()})
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        f.write(f"@relation {relation}\n\n")
+        for col in transactions.columns:
+            f.write(f"@attribute {col} {{{','.join(values[col])}}}\n")
+        f.write("\n@data\n")
+        for row in transactions.itertuples(index=False):
+            f.write(",".join(row) + "\n")
+    return path
+
+
 def save_index(df, path):
     """Sauvegarde la correspondance ligne de transaction -> (YEAR, DOY) pour la phase 3."""
     path = Path(path)
