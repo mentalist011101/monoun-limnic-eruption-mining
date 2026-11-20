@@ -167,10 +167,7 @@
     Extraction par règles d'association\\[0.2em]
     des combinaisons hydro-météorologiques extrêmes\\[0.2em]
     déclencheuses d'inversion convective au lac Monoun\\[0.5em]
-    \large Analyse rétrospective de l'éruption du 15 août 1984 (1983--2024)}\\[0.9em]
-  {\color{NuitBleue!50!black}\normalsize
-    $X \rightarrow Y \quad \text{avec} \quad \operatorname{supp} \geq \text{minSupp},
-    \quad \operatorname{conf} \geq \text{minConf}$}
+    \large Analyse rétrospective de l'éruption du 15 août 1984 (1983--2024)}
 \end{center}
 
 \vspace{0.5cm}
@@ -204,6 +201,8 @@
 \thispagestyle{plain}
 \newpage
 \listoftables
+\thispagestyle{plain}
+\newpage
 \listoffigures
 \thispagestyle{plain}
 \newpage
@@ -215,50 +214,46 @@
 \addcontentsline{toc}{section}{Définition des mots clés}
 \vspace{0.3em}
 
-{\small
-\rowcolors{1}{white}{GrisL}
-\begin{longtable}{>{\bfseries\color{NuitBleue}}p{3.6cm}p{11.2cm}}
-\toprule
-\multicolumn{2}{l}{\textsc{\color{OrCam!70!black}Contexte physique}}\\
-\midrule
-Éruption limnique & Dégazage brutal d'un lac dont les eaux profondes sont sursaturées en gaz dissous (ici le CO$_2$). Le gaz libéré, plus dense que l'air, s'écoule au sol et asphyxie. \\
-Stratification & Superposition de couches d'eau de densités différentes. Tant qu'elle est stable, l'eau profonde chargée en gaz reste au fond. \\
-Inversion convective & Rupture de la stratification : l'eau de surface devient plus dense que l'eau profonde (par refroidissement, par exemple), plonge et fait remonter l'eau profonde. \\
-Loi de Henry & La quantité de gaz dissous dans un liquide est proportionnelle à la pression du gaz au-dessus du liquide : une baisse de pression diminue la solubilité du CO$_2$. \\
-Réanalyse MERRA-2 & Reconstitution du climat passé par un modèle numérique qui assimile des observations. Les valeurs sont des moyennes sur une maille d'environ 50~km, pas des mesures locales. \\
-NASA POWER & Service de la NASA qui fournit des séries météorologiques journalières issues de MERRA-2 en tout point du globe. \\
-DOY & \emph{Day Of Year} : numéro du jour dans l'année (1 à 365, ou 366 les années bissextiles). Le 15 août 1984 correspond au DOY 228. \\
-DTR & \emph{Diurnal Temperature Range} : amplitude thermique du jour, $T_{\max} - T_{\min}$. Faible sous un ciel couvert, forte par temps sec et dégagé. \\
-Centile ($P_{10}$, $P_{95}$) & Valeur sous laquelle se trouvent 10~\% (respectivement 95~\%) des observations. \\
-\midrule
-\multicolumn{2}{l}{\textsc{\color{OrCam!70!black}Fouille de données}}\\
-\midrule
-Discrétisation & Transformation d'une variable numérique en classes (« pluie modérée », « pluie extrême »…) à l'aide de seuils. \\
-Item & Modalité binaire, présente ou absente un jour donné (ex. \itm{Rain\_Extreme\_Downpour}). \\
-Transaction & Ensemble des items observés pour une unité. Ici, une transaction est \textbf{un jour}, qui contient exactement 6 items. \\
-Motif (itemset) & Sous-ensemble non vide d'items. Un motif de $k$ items est un $k$-motif. \\
-Règle d'association & Implication $X \rightarrow Y$ entre deux motifs disjoints : $X$ est la \textbf{prémisse}, $Y$ le \textbf{conséquent}. \\
-Support & Proportion des transactions qui contiennent un motif (ou la prémisse et le conséquent d'une règle). Mesure la \emph{fréquence}. \\
-Confiance & Proportion des transactions contenant $X$ qui contiennent aussi $Y$ ; estimation de $P(Y \mid X)$. Mesure la \emph{fiabilité} de la règle. \\
-minSupp, minConf & Seuils minimaux de support et de confiance fixés par l'utilisateur. \\
-Anti-monotonie & Si $M_1 \subseteq M_2$, alors $\operatorname{supp}(M_1) \geq \operatorname{supp}(M_2)$ : ajouter des items ne peut que faire baisser le support. \\
-Apriori & Algorithme du cours, de type « générer-et-élaguer » : il génère les motifs candidats de taille $k+1$ à partir des motifs fréquents de taille $k$. \\
-FP-Growth & Algorithme de type « diviser-pour-régner » (Han et al., 2000) : il compresse la base dans un arbre (FP-tree) et extrait les motifs fréquents sans générer de candidats. Même résultat qu'Apriori. \\
-Weka & Logiciel de fouille de données de l'université de Waikato, utilisé en cours. \\
-ARFF & \emph{Attribute-Relation File Format} : format de fichier texte natif de Weka. \\
-Règle informative & Règle telle que $\operatorname{conf}(X \rightarrow Y) > \operatorname{supp}(Y)$ : connaître $X$ rend $Y$ plus fréquent qu'en moyenne. \\
-Écart & $\operatorname{conf}(X \rightarrow Y) - \operatorname{supp}(Y)$ : gain de fréquence de $Y$ apporté par $X$. Le rapport correspondant est appelé \emph{lift}. \\
-Règle redondante & Règle $X \rightarrow Y$ pour laquelle une prémisse plus courte $X' \subset X$ donne une confiance au moins égale. \\
-\midrule
-\multicolumn{2}{l}{\textsc{\color{OrCam!70!black}Analyse temporelle}}\\
-\midrule
-Fenêtre pré-éruption & Les 7 jours qui précèdent l'éruption, jour de l'éruption inclus (DOY 222 à 228 de 1984). \\
-Signature & Motif présent tous les jours de la fenêtre pré-éruption. \\
-Test de Mann-Kendall & Test non paramétrique de tendance monotone d'une série temporelle. Il repose sur le $\tau$ de Kendall entre le temps et la série. \\
-p-valeur & Probabilité d'observer une tendance au moins aussi marquée si la série n'avait en réalité aucune tendance. En dessous de 0,05, la tendance est jugée significative. \\
-\bottomrule
-\end{longtable}
-}
+\subsection*{Contexte physique}
+\begin{itemize}[itemsep=3pt]
+  \item \textbf{\color{NuitBleue}Éruption limnique} : Dégazage brutal d'un lac dont les eaux profondes sont sursaturées en gaz dissous (ici le CO$_2$). Le gaz libéré, plus dense que l'air, s'écoule au sol et asphyxie.
+  \item \textbf{\color{NuitBleue}Stratification} : Superposition de couches d'eau de densités différentes. Tant qu'elle est stable, l'eau profonde chargée en gaz reste au fond.
+  \item \textbf{\color{NuitBleue}Inversion convective} : Rupture de la stratification : l'eau de surface devient plus dense que l'eau profonde (par refroidissement, par exemple), plonge et fait remonter l'eau profonde.
+  \item \textbf{\color{NuitBleue}Loi de Henry} : La quantité de gaz dissous dans un liquide est proportionnelle à la pression du gaz au-dessus du liquide : une baisse de pression diminue la solubilité du CO$_2$.
+  \item \textbf{\color{NuitBleue}Réanalyse MERRA-2} : Reconstitution du climat passé par un modèle numérique qui assimile des observations. Les valeurs sont des moyennes sur une maille d'environ 50~km, pas des mesures locales.
+  \item \textbf{\color{NuitBleue}NASA POWER} : Service de la NASA qui fournit des séries météorologiques journalières issues de MERRA-2 en tout point du globe.
+  \item \textbf{\color{NuitBleue}DOY} : \emph{Day Of Year} : numéro du jour dans l'année (1 à 365, ou 366 les années bissextiles). Le 15 août 1984 correspond au DOY 228.
+  \item \textbf{\color{NuitBleue}DTR} : \emph{Diurnal Temperature Range} : amplitude thermique du jour, $T_{\max} - T_{\min}$. Faible sous un ciel couvert, forte par temps sec et dégagé.
+  \item \textbf{\color{NuitBleue}Centile ($P_{10}$, $P_{95}$)} : Valeur sous laquelle se trouvent 10~\% (respectivement 95~\%) des observations.
+\end{itemize}
+
+\subsection*{Fouille de données}
+\begin{itemize}[itemsep=3pt]
+  \item \textbf{\color{NuitBleue}Discrétisation} : Transformation d'une variable numérique en classes (« pluie modérée », « pluie extrême »…) à l'aide de seuils.
+  \item \textbf{\color{NuitBleue}Item} : Modalité binaire, présente ou absente un jour donné (ex. \itm{Rain\_Extreme\_Downpour}).
+  \item \textbf{\color{NuitBleue}Transaction} : Ensemble des items observés pour une unité. Ici, une transaction est \textbf{un jour}, qui contient exactement 6 items.
+  \item \textbf{\color{NuitBleue}Motif (itemset)} : Sous-ensemble non vide d'items. Un motif de $k$ items est un $k$-motif.
+  \item \textbf{\color{NuitBleue}Règle d'association} : Implication $X \rightarrow Y$ entre deux motifs disjoints : $X$ est la \textbf{prémisse}, $Y$ le \textbf{conséquent}.
+  \item \textbf{\color{NuitBleue}Support} : Proportion des transactions qui contiennent un motif (ou la prémisse et le conséquent d'une règle). Mesure la \emph{fréquence}.
+  \item \textbf{\color{NuitBleue}Confiance} : Proportion des transactions contenant $X$ qui contiennent aussi $Y$ ; estimation de $P(Y \mid X)$. Mesure la \emph{fiabilité} de la règle.
+  \item \textbf{\color{NuitBleue}minSupp, minConf} : Seuils minimaux de support et de confiance fixés par l'utilisateur.
+  \item \textbf{\color{NuitBleue}Anti-monotonie} : Si $M_1 \subseteq M_2$, alors $\operatorname{supp}(M_1) \geq \operatorname{supp}(M_2)$ : ajouter des items ne peut que faire baisser le support.
+  \item \textbf{\color{NuitBleue}Apriori} : Algorithme du cours, de type « générer-et-élaguer » : il génère les motifs candidats de taille $k+1$ à partir des motifs fréquents de taille $k$.
+  \item \textbf{\color{NuitBleue}FP-Growth} : Algorithme de type « diviser-pour-régner » (Han et al., 2000) : il compresse la base dans un arbre (FP-tree) et extrait les motifs fréquents sans générer de candidats. Même résultat qu'Apriori.
+  \item \textbf{\color{NuitBleue}Weka} : Logiciel de fouille de données de l'université de Waikato, utilisé en cours.
+  \item \textbf{\color{NuitBleue}ARFF} : \emph{Attribute-Relation File Format} : format de fichier texte natif de Weka.
+  \item \textbf{\color{NuitBleue}Règle informative} : Règle telle que $\operatorname{conf}(X \rightarrow Y) > \operatorname{supp}(Y)$ : connaître $X$ rend $Y$ plus fréquent qu'en moyenne.
+  \item \textbf{\color{NuitBleue}Écart} : $\operatorname{conf}(X \rightarrow Y) - \operatorname{supp}(Y)$ : gain de fréquence de $Y$ apporté par $X$. Le rapport correspondant est appelé \emph{lift}.
+  \item \textbf{\color{NuitBleue}Règle redondante} : Règle $X \rightarrow Y$ pour laquelle une prémisse plus courte $X' \subset X$ donne une confiance au moins égale.
+\end{itemize}
+
+\subsection*{Analyse temporelle}
+\begin{itemize}[itemsep=3pt]
+  \item \textbf{\color{NuitBleue}Fenêtre pré-éruption} : Les 7 jours qui précèdent l'éruption, jour de l'éruption inclus (DOY 222 à 228 de 1984).
+  \item \textbf{\color{NuitBleue}Signature} : Motif présent tous les jours de la fenêtre pré-éruption.
+  \item \textbf{\color{NuitBleue}Test de Mann-Kendall} : Test non paramétrique de tendance monotone d'une série temporelle. Il repose sur le $\tau$ de Kendall entre le temps et la série.
+  \item \textbf{\color{NuitBleue}p-valeur} : Probabilité d'observer une tendance au moins aussi marquée si la série n'avait en réalité aucune tendance. En dessous de 0,05, la tendance est jugée significative.
+\end{itemize}
 \newpage
 
 \needspace{12\baselineskip}
@@ -405,10 +400,10 @@ transactions qui contiennent tous les items du motif $M$, et une règle $R : X \
 \end{formule}
 
 \begin{itemize}
-  \item \textbf{Le support dit « combien de fois ».} C'est la part des jours où la règle
-        s'observe en entier. Un support faible signifie que la règle repose sur peu de jours :
+  \item \textbf{Le support mesure la fréquence de la règle.} C'est la part des jours où la
+        règle s'observe en entier. Un support faible signifie que la règle repose sur peu de jours :
         elle peut être un hasard. Le seuil \textbf{minSupp} écarte ces règles trop rares.
-  \item \textbf{La confiance dit « à quel point c'est fiable ».} C'est la probabilité
+  \item \textbf{La confiance mesure la fiabilité de la règle.} C'est la probabilité
         conditionnelle $P(Y \mid X)$ : parmi les jours qui présentent $X$, la part qui présente
         aussi $Y$. Le seuil \textbf{minConf} écarte les règles peu fiables.
 \end{itemize}
@@ -502,30 +497,44 @@ La figure~\ref{fig:pipeline} résume le processus. Le code est organisé en fonc
 
 \begin{figure}[H]
 \centering
-\resizebox{\linewidth}{!}{%
+\setlength{\parindent}{0pt}
 \begin{tikzpicture}[
-  node distance=5mm and 4mm,
-  box/.style={draw=NuitBleue, fill=NuitBleue!6, rounded corners=2pt, align=center,
-              font=\footnotesize, minimum height=11mm, text width=2.35cm, inner sep=3pt},
-  weka/.style={box, draw=OrCam!80!black, fill=OrCam!12},
+  box/.style={draw=NuitBleue!70, fill=white, rounded corners=3pt, align=center,
+              font=\footnotesize, minimum width=2.8cm, text width=2.65cm,
+              minimum height=1.45cm, inner sep=2pt},
+  weka/.style={box, draw=OrCam!90!black, fill=OrCam!10, minimum width=3.6cm, text width=3.4cm},
   res/.style={box, draw=VertSav!80!black, fill=VertSav!8},
-  arr/.style={-{Stealth[length=2mm]}, NuitBleue!80, thick}]
-  \node[box] (a) {\textbf{Données brutes}\\NASA POWER\\1983--2024};
-  \node[box, right=of a] (b) {\textbf{Nettoyage}\\en-tête, $-999$,\\calcul de DTR};
-  \node[box, right=of b] (c) {\textbf{Analyse}\\\textbf{exploratoire}\\saisons, seuils};
-  \node[box, right=of c] (d) {\textbf{Discrétisation}\\18 items,\\6 par jour};
-  \node[box, below=9mm of d] (e) {\textbf{Encodage}\\binaire \{0,1\}\\export ARFF};
-  \node[weka, left=of e] (f) {\textbf{Weka}\\FP-Growth\\3 niveaux minSupp};
-  \node[box, left=of f] (g) {\textbf{Post-traitement}\\règles informatives,\\non redondantes};
-  \node[box, left=of g] (h) {\textbf{Fenêtre 1984}\\signature\\pré-éruption};
-  \node[res, below=9mm of h] (i) {\textbf{Réapparition}\\jours/an, pente,\\Mann-Kendall};
-  \node[res, right=of i] (j) {\textbf{Verdict}\\H0 à H3};
-  \draw[arr] (a) -- (b); \draw[arr] (b) -- (c); \draw[arr] (c) -- (d);
-  \draw[arr] (d) -- (e); \draw[arr] (e) -- (f); \draw[arr] (f) -- (g); \draw[arr] (g) -- (h);
-  \draw[arr] (h) -- (i); \draw[arr] (i) -- (j);
-\end{tikzpicture}}
-\caption{Processus de travail. En bleu : Python (\texttt{01\_preparation.ipynb},
-\texttt{02\_analyse.ipynb}) ; en or : Weka ; en vert : réponse aux hypothèses.}
+  lanelabel/.style={font=\scriptsize\bfseries\scshape, text=NuitBleue, rotate=90},
+  arr/.style={-{Stealth[length=2.2mm]}, NuitBleue!75, line width=0.8pt}]
+  % bandes
+  \fill[NuitBleue!5, rounded corners=4pt] (-1.7, 1.0) rectangle (13.45, -1.0);
+  \fill[OrCam!7, rounded corners=4pt]     (-1.7,-1.4) rectangle (13.45, -3.4);
+  \fill[VertSav!6, rounded corners=4pt]   (-1.7,-3.8) rectangle (13.45, -5.8);
+  \node[lanelabel] at (-1.4, 0)   {Préparation};
+  \node[lanelabel] at (-1.4,-2.4) {Extraction};
+  \node[lanelabel] at (-1.4,-4.8) {Analyse};
+  % phase 1 : Python
+  \node[box] (a) at (0.35,0)     {\textbf{Données}\\NASA POWER\\1983--2024};
+  \node[box] (b) at (3.3,0)   {\textbf{Nettoyage}\\en-tête, $-999$\\calcul du DTR};
+  \node[box] (c) at (6.25,0)   {\textbf{Exploration}\\saisons\\distributions};
+  \node[box] (d) at (9.2,0)   {\textbf{Discrétisation}\\18 items\\6 par jour};
+  \node[box] (e) at (12.15,0)  {\textbf{Encodage}\\binaire \{0, 1\}\\fichier ARFF};
+  % phase 2 : Weka
+  \node[weka] (f) at (6.25,-2.4) {\textbf{FP-Growth (Weka)}\\3 essais, minSupp :\\0,10 ; 0,05 ; 0,01};
+  % phase 3 : Python
+  \node[box] (g) at (1.8,-4.8)  {\textbf{Filtrage}\\conf $>$ supp($Y$)\\sans redondance};
+  \node[box] (h) at (4.75,-4.8)  {\textbf{Fenêtre 1984}\\signature\\pré-éruption};
+  \node[box] (i) at (7.7,-4.8)  {\textbf{Réapparition}\\jours par an\\tendances};
+  \node[res] (j) at (10.65,-4.8) {\textbf{Verdict}\\hypothèses\\H0 à H3};
+  % flèches
+  \draw[arr] (a) -- (b); \draw[arr] (b) -- (c); \draw[arr] (c) -- (d); \draw[arr] (d) -- (e);
+  \draw[arr] (e.south) |- (f.east);
+  \draw[arr] (f.west) -| (g.north);
+  \draw[arr] (g) -- (h); \draw[arr] (h) -- (i); \draw[arr] (i) -- (j);
+\end{tikzpicture}
+\caption{Processus de travail en trois phases : préparation des données en Python
+(\texttt{01\_preparation.ipynb}), extraction des règles dans Weka, puis analyse en Python
+(\texttt{02\_analyse.ipynb}).}
 \label{fig:pipeline}
 \end{figure}
 
@@ -1135,6 +1144,7 @@ des seuils fixés par les centiles réels de la série ; appliquer la même dém
 (21 août 1986) pour disposer d'un second événement ; utiliser des données de station ou de
 plus haute résolution, moins lissées que la réanalyse.
 
+\newpage
 %═══════════════════════════════════════════════════════════════════════
 \section*{Références}
 \addcontentsline{toc}{section}{Références}
@@ -1161,6 +1171,7 @@ plus haute résolution, moins lissées que la réanalyse.
         Science, ENSPY, 2026--2027.
 \end{itemize}
 
+\newpage
 %═══════════════════════════════════════════════════════════════════════
 \section*{Annexe — Reproductibilité}
 \addcontentsline{toc}{section}{Annexe — Reproductibilité}

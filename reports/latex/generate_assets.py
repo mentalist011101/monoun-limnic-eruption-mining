@@ -122,7 +122,8 @@ save_table("tab_descriptives", ["Variable", "Signification", "Unité", "Moy.", "
 
 # ---------------------------------------------------------------- 2. climatologie mensuelle
 clim = raw.groupby("MONTH")[["PRECTOTCORR", "T2M_MIN", "DTR", "WS2M", "PS"]].mean()
-fig, axes = plt.subplots(1, 5, figsize=(12.5, 2.6))
+fig, axes = plt.subplots(2, 3, figsize=(11, 6.4))
+axes = axes.flat
 for ax, v in zip(axes, clim.columns):
     lab, unit = VARS[v]
     ax.axvspan(5.5, 11.0, color="#f1f0eb", zorder=0)
@@ -131,9 +132,13 @@ for ax, v in zip(axes, clim.columns):
     ax.set_title(f"{lab} ({unit})")
     ax.set_xticks(range(1, 13), MONTHS)
     ax.grid(axis="x", visible=False)
-fig.text(0.5, -0.06, "Zone grisée : Season_Monsoon_Peak (DOY 151–319, de juin à mi-novembre). Point rouge : août, mois de l'éruption.",
-         ha="center", color=MUTED, fontsize=8.5)
-fig.tight_layout()
+note = axes[5]
+note.axis("off")
+note.text(0.05, 0.6, "Zone grisée : pic de mousson\n(Season_Monsoon_Peak, DOY 151–319,\nde juin à mi-novembre)", fontsize=9.5,
+          color=MUTED, va="center", transform=note.transAxes)
+note.scatter([0.08], [0.25], s=60, color=RED, transform=note.transAxes)
+note.text(0.14, 0.25, "août, mois de l'éruption", fontsize=9.5, color=MUTED, va="center", transform=note.transAxes)
+fig.tight_layout(h_pad=2.5, w_pad=2)
 savefig(fig, "fig_climatologie")
 macro("PSaout", fr(clim.loc[8, "PS"], 3))
 macro("PSjanv", fr(clim.loc[1, "PS"], 3))
@@ -148,7 +153,8 @@ macro("TminAout", fr(clim.loc[8, "T2M_MIN"], 1))
 
 # ---------------------------------------------------------------- 3. histogrammes et seuils
 TH = {"PRECTOTCORR": (1, 20), "T2M_MIN": (11, 14), "DTR": (8, 14), "WS2M": (1.5, 3), "PS": (88.4, 88.7)}
-fig, axes = plt.subplots(1, 5, figsize=(12.5, 2.6))
+fig, axes = plt.subplots(2, 3, figsize=(11, 6.4))
+axes = axes.flat
 for ax, (v, (a, b)) in zip(axes, TH.items()):
     lab, unit = VARS[v]
     data = raw[v].clip(upper=60) if v == "PRECTOTCORR" else raw[v]
@@ -160,10 +166,12 @@ for ax, (v, (a, b)) in zip(axes, TH.items()):
     ax.grid(visible=False)
     ymax = ax.get_ylim()[1]
     for t in (a, b):
-        ax.text(t, ymax * 0.97, f" {str(t).replace('.', ',')}", fontsize=7.5, color=INK, va="top")
-fig.text(0.5, -0.06, "Lignes en pointillés : seuils de discrétisation de l'énoncé. Pluie tronquée à 60 mm pour la lisibilité.",
-         ha="center", color=MUTED, fontsize=8.5)
-fig.tight_layout()
+        ax.text(t, ymax * 0.97, f" {str(t).replace('.', ',')}", fontsize=9, color=INK, va="top")
+note = axes[5]
+note.axis("off")
+note.text(0.05, 0.5, "Lignes en pointillés :\nseuils de discrétisation de l'énoncé.\n\nPluie tronquée à 60 mm\npour la lisibilité.",
+          fontsize=9.5, color=MUTED, va="center")
+fig.tight_layout(h_pad=2.5, w_pad=2)
 savefig(fig, "fig_histogrammes")
 
 # seuils vs centiles
