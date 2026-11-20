@@ -14,3 +14,14 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
+
+# LaTeX
+reports/latex/*.aux
+reports/latex/*.log
+reports/latex/*.out
+reports/latex/*.toc
+reports/latex/*.lof
+reports/latex/*.lot
+reports/latex/*.fls
+reports/latex/*.fdb_latexmk
+reports/latex/main.pdf

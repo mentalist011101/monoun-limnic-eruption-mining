@@ -47,7 +47,7 @@ Source : NASA POWER (réanalyse MERRA-2), point journalier, lat 5.58 / lon 10.58
 │   └── results/      # règles extraites et paramètres utilisés dans Weka
 ├── results/
 │   └── figures/      # graphiques
-└── reports/          # rapport final
+└── reports/          # rapport final (PDF) et sources LaTeX (reports/latex/)
 ```
 
 ## Installation

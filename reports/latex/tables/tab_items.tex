@@ -1,0 +1,31 @@
+\small
+\begin{tabular}{lllrr}
+\toprule
+\rowcolor{NuitBleue!90}
+\color{white}\textbf{Variable} & \color{white}\textbf{Item} & \color{white}\textbf{Condition} & \color{white}\textbf{Jours} & \color{white}\textbf{Part} \\
+\midrule
+\texttt{DOY} & \texttt{Season\_Dry} & DOY $\geq$ 320 ou $\leq$ 60 & 4\,463 & 29,1 \% \\
+ & \texttt{Season\_Transition} & 61 -- 150 & 3\,780 & 24,6 \% \\
+ & \texttt{Season\_Monsoon\_Peak} & 151 -- 319 & 7\,098 & 46,3 \% \\
+\addlinespace[2pt]
+\texttt{PRECTOTCORR} & \texttt{Rain\_None} & < 1 mm & 5\,201 & 33,9 \% \\
+ & \texttt{Rain\_Moderate} & [1 ; 20] mm & 9\,503 & 61,9 \% \\
+ & \texttt{Rain\_Extreme\_Downpour} & > 20 mm & 637 & 4,2 \% \\
+\addlinespace[2pt]
+\texttt{T2M\_MIN} & \texttt{Tmin\_Warm} & > 14 °C & 14\,558 & 94,9 \% \\
+ & \texttt{Tmin\_Cold} & [11 ; 14] °C & 767 & 5,0 \% \\
+ & \texttt{Tmin\_Severe\_Cooling} & < 11 °C & 16 & 0,1 \% \\
+\addlinespace[2pt]
+\texttt{DTR} & \texttt{DTR\_Suppressed} & < 8 °C & 8\,566 & 55,8 \% \\
+ & \texttt{DTR\_Moderate} & [8 ; 14] °C & 6\,441 & 42,0 \% \\
+ & \texttt{DTR\_Extreme} & > 14 °C & 334 & 2,2 \% \\
+\addlinespace[2pt]
+\texttt{WS2M} & \texttt{Wind\_Calm} & < 1,5 m/s & 10\,178 & 66,3 \% \\
+ & \texttt{Wind\_Moderate} & [1,5 ; 3] m/s & 5\,158 & 33,6 \% \\
+ & \texttt{Wind\_High\_Shear} & > 3 m/s & 5 & 0,0 \% \\
+\addlinespace[2pt]
+\texttt{PS} & \texttt{Pressure\_High\_Stable} & > 88,7 kPa & 3\,544 & 23,1 \% \\
+ & \texttt{Pressure\_Normal} & [88,4 ; 88,7] kPa & 11\,167 & 72,8 \% \\
+ & \texttt{Pressure\_Critical\_Drop} & < 88,4 kPa & 630 & 4,1 \% \\
+\bottomrule
+\end{tabular}
